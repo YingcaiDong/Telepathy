@@ -6,3 +6,9 @@ Pick a number in your mind, and the app will know it!
 2. The app will show you some numbers on the screen.
 3. If your secret number is shown within these numbers on screen, press 'Yes' otherwise 'No'.
 4. Then the app will tell your secret number!!!
+
+# Example
+Let's say your secret number is 28
+![Alt text](Telepathy/README DEMO/ScreenShot1.png?raw=true "Numbers on screen")
+So your secret number is within these numbers, then you press 'Yes'
+That's it, very easy!
