@@ -14,6 +14,9 @@ class NumberPadViewController: UICollectionViewController {
     var arrayPad = [[Int]]()
     let itemsPerRow: CGFloat = 5
     let inset: CGFloat = 15
+    let foot_height: CGFloat = 30
+    var footButton: TwoButton? = nil
+    var cnt: Int = 0
     
     weak var datasource: UICollectionViewDataSource?
     
@@ -57,12 +60,12 @@ extension NumberPadViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         arrayPad = generateNumberSheet()
-        return arrayPad[0].count
+        return arrayPad[cnt].count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "displayNum", for: indexPath) as! Cell2DisplayNumber
-        cell.NumberCell.text = String(arrayPad[0][indexPath.row])
+        cell.NumberCell.text = String(arrayPad[cnt][indexPath.row])
         cell.backgroundColor = UIColor.white
         return cell
     }
@@ -70,13 +73,45 @@ extension NumberPadViewController {
 
 extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let insets2Edge = inset * (itemsPerRow+1)
+        let insets2inLine = inset * itemsPerRow
         let theWidth = (view.frame.width - insets2Edge) / itemsPerRow
-        let theHeight = (view.frame.height - insets2Edge) / itemsPerRow
+        let theHeight = (view.frame.height - insets2inLine - foot_height) / itemsPerRow
+        
         return CGSize(width: theWidth, height: theHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        return UIEdgeInsetsMake(inset, inset, 0, inset)
+    }
+    
+}
+
+extension NumberPadViewController: TwoButtonDelegate {
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
+        footButton = foot_view as! TwoButton
+        footButton!.delegate = self
+        return foot_view
+    }
+
+    
+    func button(_ button: TwoButton, correctButton press: Bool) {
+        if press {
+            print("yes")
+            cnt += 1
+            self.collectionView?.reloadData()
+            
+        }
+    }
+    
+    func button(_ button: TwoButton, wrongButton press: Bool) {
+        if press {
+            print("wrong")
+            cnt += 1
+            self.collectionView?.reloadData()
+        }
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A308CA1C1E64D3FC005BC47C /* NumberPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308CA1B1E64D3FC005BC47C /* NumberPadViewController.swift */; };
 		A32783681E85F0D600BAD727 /* Cell2DisplayNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32783671E85F0D600BAD727 /* Cell2DisplayNumber.swift */; };
+		A327836A1E861A6000BAD727 /* TwoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32783691E861A6000BAD727 /* TwoButton.swift */; };
 		A333DE931E63EFE6004551E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A333DE921E63EFE6004551E1 /* AppDelegate.swift */; };
 		A333DE981E63EFE6004551E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A333DE961E63EFE6004551E1 /* Main.storyboard */; };
 		A333DE9A1E63EFE6004551E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A333DE991E63EFE6004551E1 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		A308CA1B1E64D3FC005BC47C /* NumberPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberPadViewController.swift; sourceTree = "<group>"; };
 		A32783671E85F0D600BAD727 /* Cell2DisplayNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell2DisplayNumber.swift; sourceTree = "<group>"; };
+		A32783691E861A6000BAD727 /* TwoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoButton.swift; sourceTree = "<group>"; };
 		A333DE8F1E63EFE6004551E1 /* Telepathy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telepathy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A333DE921E63EFE6004551E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A333DE971E63EFE6004551E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				A333DE921E63EFE6004551E1 /* AppDelegate.swift */,
 				A308CA1B1E64D3FC005BC47C /* NumberPadViewController.swift */,
+				A32783691E861A6000BAD727 /* TwoButton.swift */,
 				A333DE961E63EFE6004551E1 /* Main.storyboard */,
 				A32783671E85F0D600BAD727 /* Cell2DisplayNumber.swift */,
 				A333DE991E63EFE6004551E1 /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A327836A1E861A6000BAD727 /* TwoButton.swift in Sources */,
 				A32783681E85F0D600BAD727 /* Cell2DisplayNumber.swift in Sources */,
 				A308CA1C1E64D3FC005BC47C /* NumberPadViewController.swift in Sources */,
 				A333DE931E63EFE6004551E1 /* AppDelegate.swift in Sources */,
