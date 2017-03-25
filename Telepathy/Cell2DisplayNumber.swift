@@ -11,5 +11,4 @@ import UIKit
 class Cell2DisplayNumber: UICollectionViewCell {
     
     @IBOutlet weak var NumberCell: UITextField!
-    
 }

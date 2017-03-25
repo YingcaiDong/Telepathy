@@ -27,7 +27,6 @@ class NumberPadViewController: UICollectionViewController {
 }
 
 // MARK: - Generate array based on binary
-// MARK: - Decipher binary to decimal
 extension NumberPadViewController {
     // generate the number
     func generateNumberSheet() -> [[Int]] {
@@ -123,7 +122,6 @@ extension NumberPadViewController: TwoButtonDelegate {
                 binaryNumber |= UInt8(0b1 << cnt)
             }
             cnt += 1
-            print("binary number = \(UInt8(binaryNumber))")
             self.collectionView?.reloadData()
             
         }
