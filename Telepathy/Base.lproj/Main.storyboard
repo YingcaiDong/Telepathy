@@ -70,8 +70,21 @@
                                         <action selector="noButton:" destination="Ml0-Jg-Hu1" eventType="touchUpInside" id="Kmi-pz-jJJ"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kq1-zb-2lP">
+                                    <rect key="frame" x="206" y="10" width="156" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Try Another Number!"/>
+                                    <connections>
+                                        <action selector="nextRound:" destination="Ml0-Jg-Hu1" eventType="touchUpInside" id="O6b-Mf-Swc"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <outlet property="nextRound" destination="kq1-zb-2lP" id="tQW-WQ-85y"/>
+                                <outlet property="noButton" destination="tfw-tq-C1Q" id="BSD-tc-T5U"/>
+                                <outlet property="yesButton" destination="yUu-sG-aTr" id="RQb-b0-u9M"/>
+                            </connections>
                         </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="U8E-JW-sEh" id="uXG-vT-DNM"/>

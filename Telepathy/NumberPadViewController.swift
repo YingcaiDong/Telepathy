@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NumberPadViewControllerDelegate: class {
+    func howManyTimes(_ controller: NumberPadViewController, didUser press: Int)
+}
+
 class NumberPadViewController: UICollectionViewController {
     
     var numberPad_flag: Bool = false
@@ -15,11 +19,11 @@ class NumberPadViewController: UICollectionViewController {
     let itemsPerRow: CGFloat = 5
     let inset: CGFloat = 15
     let foot_height: CGFloat = 30
-    var footButton: TwoButton? = nil
     var cnt: Int = 0
     var binaryNumber: UInt8 = 0b0
     
     weak var datasource: UICollectionViewDataSource?
+    weak var delegate: NumberPadViewControllerDelegate?
     
     override func viewDidLoad() {
         
@@ -108,28 +112,40 @@ extension NumberPadViewController: TwoButtonDelegate {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
-        footButton = foot_view as! TwoButton
-        footButton!.delegate = self
+        
+        let footButton: TwoButton = foot_view as! TwoButton
+        footButton.delegate = self
+        
+        self.delegate = footButton
+        delegate?.howManyTimes(self, didUser: cnt)
+        
         return foot_view
     }
 
     
     func button(_ button: TwoButton, correctButton press: Bool) {
         if press {
-            if binaryNumber == 0 {
-                binaryNumber = 1
-            } else if cnt < 6 {
+            if cnt < 6 {
                 binaryNumber |= UInt8(0b1 << cnt)
             }
             cnt += 1
             self.collectionView?.reloadData()
             
         }
+        delegate?.howManyTimes(self, didUser: cnt)
     }
     
     func button(_ button: TwoButton, wrongButton press: Bool) {
         if press {
             cnt += 1
+            self.collectionView?.reloadData()
+        }
+        delegate?.howManyTimes(self, didUser: cnt)
+    }
+    
+    func button(_ button: TwoButton, nextRoundButton press: Bool) {
+        if press {
+            cnt = 0
             self.collectionView?.reloadData()
         }
     }
