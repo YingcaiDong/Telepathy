@@ -9,6 +9,8 @@ Pick a number in your mind, and the app will know it!
 
 # Example
 Let's say your secret number is 28
-![alt text](Telepathy/README DEMO/ScreenShot1.png"Numbers on scree
+![alt text](/README DEMO/ScreenShot1.png"Numbers on scree"
+
+)
 So your secret number is within these numbers, then you press 'Yes'
 That's it, very easy!
