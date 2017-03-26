@@ -16,9 +16,10 @@ class NumberPadViewController: UICollectionViewController {
     
     var numberPad_flag: Bool = false
     var arrayPad = [[Int]]()
-    let itemsPerRow: CGFloat = 5
+    let itemsPerRow: CGFloat = 10
+    let itemsPerCol: CGFloat = 5
     let inset: CGFloat = 15
-    let foot_height: CGFloat = 30
+    let foot_height: CGFloat = 50
     var cnt: Int = 0
     var binaryNumber: UInt8 = 0b0
     
@@ -30,15 +31,22 @@ class NumberPadViewController: UICollectionViewController {
     }
 }
 
+extension NumberPadViewController {
+    struct arrange {
+        var rows: CGFloat
+        var cols: CGFloat
+    }
+}
+
 // MARK: - Generate array based on binary
 extension NumberPadViewController {
     // generate the number
     func generateNumberSheet() -> [[Int]] {
         var array:[[Int]] = []
         var subArray:[Int] = []
-        for num in 1...50 {
+        for num in 1...100 {
             var binary: UInt8 = UInt8(num)
-            for index in 0...5 {
+            for index in 0...6 {
                 switch num {
                 case 1:
                     if binary & UInt8(1) == 0b1 {   // key bit is 1
@@ -59,6 +67,18 @@ extension NumberPadViewController {
         }
         return array
     }
+    
+    func arrangeRowNCol(cnt: Int) -> arrange {
+        if cnt < 7 {
+            let numOfElements = arrayPad[cnt].count
+            if numOfElements == 50 {
+                return arrange(rows: 5, cols: 10)
+            } else {
+                return arrange(rows: 5, cols: 5)
+            }
+        }
+        return arrange(rows: 1, cols: 1)
+    }
 }
 
 // MARK: - Dispaly array[cnt] elements
@@ -69,7 +89,7 @@ extension NumberPadViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         arrayPad = generateNumberSheet()
-        if cnt > 5 {
+        if cnt >= 7 {
             return 1
         } else {
             return arrayPad[cnt].count
@@ -79,24 +99,25 @@ extension NumberPadViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "displayNum", for: indexPath) as! Cell2DisplayNumber
         
-        if cnt > 5 {
+        if cnt >= 7 {
             cell.NumberCell.text = String(Int(binaryNumber))
         } else {
             cell.NumberCell.text = String(arrayPad[cnt][indexPath.row])
         }
-        cell.backgroundColor = UIColor.white
+        cell.backgroundColor = UIColor.clear
         return cell
     }
 }
 
-// MARK: - Custom collection view cell size
+// MARK: - Custom collection view cell size and footer
 extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
+    // MARK: - Cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let insets2Edge = inset * (itemsPerRow+1)
-        let insets2inLine = inset * itemsPerRow
+        let insets2inLine = inset * itemsPerCol
         let theWidth = (view.frame.width - insets2Edge) / itemsPerRow
-        let theHeight = (view.frame.height - insets2inLine - foot_height) / itemsPerRow
+        let theHeight = (view.frame.height - insets2inLine - foot_height) / itemsPerCol
         
         return CGSize(width: theWidth, height: theHeight)
     }
@@ -105,11 +126,7 @@ extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsetsMake(inset, inset, 0, inset)
     }
     
-}
-
-// MARK: - Enable section footer and two button
-extension NumberPadViewController: TwoButtonDelegate {
-    
+    // MARK: - Footer size
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
         
@@ -119,13 +136,21 @@ extension NumberPadViewController: TwoButtonDelegate {
         self.delegate = footButton
         delegate?.howManyTimes(self, didUser: cnt)
         
+        foot_view.backgroundColor = UIColor.clear
         return foot_view
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.size.width, height: foot_height)
+    }
+}
 
+// MARK: - Enable section footer and two button
+extension NumberPadViewController: TwoButtonDelegate {
     
     func button(_ button: TwoButton, correctButton press: Bool) {
         if press {
-            if cnt < 6 {
+            if cnt < 7 {
                 binaryNumber |= UInt8(0b1 << cnt)
             }
             cnt += 1

@@ -41,7 +41,7 @@ class TwoButton: UICollectionReusableView {
 extension TwoButton: NumberPadViewControllerDelegate {
     func howManyTimes(_ controller: NumberPadViewController, didUser press: Int) {
         buttonPressCnt = press
-        if buttonPressCnt < 6 {
+        if buttonPressCnt < 7 {
             yesButton.isEnabled = true
             yesButton.isHidden = false
             
