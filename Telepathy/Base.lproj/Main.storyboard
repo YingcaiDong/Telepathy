@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,12 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DJm-IE-ghR">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="50" height="50"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="GOt-vC-qrX" customClass="CellBehaviorController" customModule="Telepathy" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="displayNum" id="Qce-gN-819" customClass="Cell2DisplayNumber" customModule="Telepathy" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -32,7 +26,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MaT-eL-CJ5">
+                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MaT-eL-CJ5">
                                             <rect key="frame" x="0.0" y="10" width="50" height="30"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -51,47 +45,6 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="footbutton" id="Ml0-Jg-Hu1" customClass="TwoButton" customModule="Telepathy" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="50" width="568" height="50"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfw-tq-C1Q">
-                                    <rect key="frame" x="530" y="10" width="30" height="30"/>
-                                    <state key="normal" title="No"/>
-                                    <connections>
-                                        <action selector="noButton:" destination="Ml0-Jg-Hu1" eventType="touchUpInside" id="Kmi-pz-jJJ"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kq1-zb-2lP">
-                                    <rect key="frame" x="212" y="10" width="145" height="30"/>
-                                    <state key="normal" title="Try Another Number!"/>
-                                    <connections>
-                                        <action selector="nextRound:" destination="Ml0-Jg-Hu1" eventType="touchUpInside" id="O6b-Mf-Swc"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUu-sG-aTr">
-                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                    <state key="normal" title="Yes"/>
-                                    <connections>
-                                        <action selector="yesButton:" destination="Ml0-Jg-Hu1" eventType="touchUpInside" id="uef-ab-8Bh"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="trailingMargin" secondItem="tfw-tq-C1Q" secondAttribute="trailing" id="7lr-E6-ogm"/>
-                                <constraint firstItem="tfw-tq-C1Q" firstAttribute="centerY" secondItem="Ml0-Jg-Hu1" secondAttribute="centerY" id="E8v-ud-SfE"/>
-                                <constraint firstItem="kq1-zb-2lP" firstAttribute="centerY" secondItem="Ml0-Jg-Hu1" secondAttribute="centerY" id="TRV-jk-ZJq"/>
-                                <constraint firstItem="yUu-sG-aTr" firstAttribute="leading" secondItem="Ml0-Jg-Hu1" secondAttribute="leadingMargin" id="pTv-CP-Fqu"/>
-                                <constraint firstItem="kq1-zb-2lP" firstAttribute="centerX" secondItem="Ml0-Jg-Hu1" secondAttribute="centerX" id="r3l-T3-TRa"/>
-                                <constraint firstItem="yUu-sG-aTr" firstAttribute="centerY" secondItem="Ml0-Jg-Hu1" secondAttribute="centerY" id="rYP-EY-yye"/>
-                            </constraints>
-                            <connections>
-                                <outlet property="nextRound" destination="kq1-zb-2lP" id="tQW-WQ-85y"/>
-                                <outlet property="noButton" destination="tfw-tq-C1Q" id="BSD-tc-T5U"/>
-                                <outlet property="yesButton" destination="yUu-sG-aTr" id="RQb-b0-u9M"/>
-                            </connections>
-                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="U8E-JW-sEh" id="uXG-vT-DNM"/>
                             <outlet property="delegate" destination="U8E-JW-sEh" id="52a-GG-pAL"/>

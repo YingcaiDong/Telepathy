@@ -109,44 +109,6 @@ extension NumberPadViewController {
 
 // MARK: - Custom collection view cell size and footer
 extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
-    // MARK: - Cell size
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 5
-        var itemsPerCol: CGFloat = 10
-        if cnt < 7 {
-            if arrayPad[cnt].count == 37{
-                itemsPerCol = 8
-            }
-            let insetsWide = inset * (itemsPerCol + 1)
-            let insetsHeight = inset * itemsPerRow
-            let cellWidth = (view.frame.width - insetsWide) / itemsPerCol
-            let cellHeight = (view.frame.height - insetsHeight - foot_height) / itemsPerRow
-            
-            return CGSize(width: cellWidth, height: cellHeight)
-        } else {
-            return CGSize(width: 100, height: 100)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return inset
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return inset
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if cnt < 7 {
-            return UIEdgeInsetsMake(inset, inset, 0, inset)
-        } else {
-            let top = (view.frame.size.height - 100 - foot_height) / 2
-            let left = (view.frame.size.width - 100) / 2
-            return UIEdgeInsetsMake(top, left, top, left)
-        }
-    }
-    
-    
     
     // MARK: - Footer size
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
