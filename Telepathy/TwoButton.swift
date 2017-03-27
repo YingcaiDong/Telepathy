@@ -27,7 +27,7 @@ class TwoButton: UICollectionReusableView {
         delegate?.button(self, correctButton: message)
 }
     
-    @IBAction func noButton(_ sender: Any) {
+    @IBAction func noButton(_ sender: UIButton) {
         let message = true
         delegate?.button(self, wrongButton: message)
     }

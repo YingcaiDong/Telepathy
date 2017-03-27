@@ -67,10 +67,23 @@ class CellBehaviorController: UICollectionViewLayout {
             attributes.frame = cellFrame
             attributesCollection.append(attributes)
         }
+        
+        self.collectionView?.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "SeparatorViewKind", withReuseIdentifier: "footbutton")
     }
     
     override var collectionViewContentSize: CGSize {
         return CGSize(width: frameWidth, height: frameHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
+        foot_view.backgroundColor = UIColor.white
+        
+        let foot_attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+        foot_attributes.frame = CGRect(x: 0, y: frameHeight - foot_height, width: frameWidth, height: foot_height)
+        attributesCollection.append(foot_attributes)
+        
+        return foot_view
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -94,6 +107,22 @@ class CellBehaviorController: UICollectionViewLayout {
         }
         return result
     }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        var result: UICollectionViewLayoutAttributes?
+        for attributes in attributesCollection {
+            if indexPath == attributes.indexPath {
+                result = attributes
+            } else {
+                result = nil
+            }
+        }
+        return result
+    }
+}
+
+extension CellBehaviorController {
+
 }
 
 extension CellBehaviorController {

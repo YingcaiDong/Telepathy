@@ -21,11 +21,9 @@ class NumberPadViewController: UICollectionViewController {
     var cnt: Int = 0
     var binaryNumber: UInt8 = 0b0
     
-    weak var datasource: UICollectionViewDataSource?
     weak var delegate: NumberPadViewControllerDelegate?
     
     override func viewDidLoad() {
-        
     }
 }
 
@@ -102,7 +100,7 @@ extension NumberPadViewController {
         } else {
             cell.NumberCell.text = String(arrayPad[cnt][indexPath.row])
         }
-        cell.backgroundColor = UIColor.blue
+        cell.backgroundColor = UIColor.white
         return cell
     }
 }
@@ -120,10 +118,11 @@ extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
         self.delegate = footButton
         delegate?.howManyTimes(self, didUser: cnt)
         
-        foot_view.backgroundColor = UIColor.cyan
+        foot_view.backgroundColor = UIColor.white
         
         return foot_view
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.size.width, height: foot_height)
