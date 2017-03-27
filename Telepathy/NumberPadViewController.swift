@@ -102,7 +102,7 @@ extension NumberPadViewController {
         } else {
             cell.NumberCell.text = String(arrayPad[cnt][indexPath.row])
         }
-        cell.backgroundColor = UIColor.clear
+        cell.backgroundColor = UIColor.blue
         return cell
     }
 }
@@ -117,17 +117,33 @@ extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
             if arrayPad[cnt].count == 37{
                 itemsPerCol = 8
             }
+            let insetsWide = inset * (itemsPerCol + 1)
+            let insetsHeight = inset * itemsPerRow
+            let cellWidth = (view.frame.width - insetsWide) / itemsPerCol
+            let cellHeight = (view.frame.height - insetsHeight - foot_height) / itemsPerRow
+            
+            return CGSize(width: cellWidth, height: cellHeight)
+        } else {
+            return CGSize(width: 100, height: 100)
         }
-        let insetsWide = inset * (itemsPerCol-1)
-        let insetsHeight = inset * (itemsPerRow - 1)
-        let cellWidth = (view.frame.width - insetsWide) / itemsPerCol
-        let cellHeight = (view.frame.height - insetsHeight - foot_height) / itemsPerRow
-
-        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return inset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return inset
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(inset, inset, 5, inset)
+        if cnt < 7 {
+            return UIEdgeInsetsMake(inset, inset, 0, inset)
+        } else {
+            let top = (view.frame.size.height - 100 - foot_height) / 2
+            let left = (view.frame.size.width - 100) / 2
+            return UIEdgeInsetsMake(top, left, top, left)
+        }
     }
     
     
@@ -141,6 +157,8 @@ extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
         
         self.delegate = footButton
         delegate?.howManyTimes(self, didUser: cnt)
+        
+        foot_view.backgroundColor = UIColor.cyan
         
         return foot_view
     }
@@ -160,7 +178,6 @@ extension NumberPadViewController: TwoButtonDelegate {
             }
             cnt += 1
             self.collectionView?.reloadData()
-            self.collectionView?.invalidateIntrinsicContentSize()
             
         }
         delegate?.howManyTimes(self, didUser: cnt)
@@ -170,7 +187,6 @@ extension NumberPadViewController: TwoButtonDelegate {
         if press {
             cnt += 1
             self.collectionView?.reloadData()
-            self.collectionView?.invalidateIntrinsicContentSize()
         }
         delegate?.howManyTimes(self, didUser: cnt)
     }
