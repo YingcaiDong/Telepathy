@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="U8E-JW-sEh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="U8E-JW-sEh">
     <device id="retina4_0" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,11 +13,11 @@
         <scene sceneID="CEf-B7-Atr">
             <objects>
                 <collectionViewController id="U8E-JW-sEh" customClass="NumberPadViewController" customModule="Telepathy" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" id="LbE-OC-TSU" customClass="SupplementaryViewController" customModule="Telepathy" customModuleProvider="target">
+                    <collectionView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" id="LbE-OC-TSU">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="GOt-vC-qrX" customClass="CellBehaviorController" customModule="Telepathy" customModuleProvider="target"/>
+                        <collectionViewLayout key="collectionViewLayout" id="XzY-6G-MOO" customClass="CellBehaviorController" customModule="Telepathy" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="displayNum" id="Qce-gN-819" customClass="Cell2DisplayNumber" customModule="Telepathy" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -26,7 +26,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MaT-eL-CJ5">
+                                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MaT-eL-CJ5">
                                             <rect key="frame" x="0.0" y="10" width="50" height="30"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -50,45 +50,48 @@
                             <outlet property="delegate" destination="U8E-JW-sEh" id="52a-GG-pAL"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <outlet property="aFooter" destination="iSM-TF-Aa0" id="LyV-0f-VIT"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyq-KY-nye" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <collectionReusableView opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="footbutton" id="Kbp-nd-82T" customClass="TwoButton" customModule="Telepathy" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="footer" id="iSM-TF-Aa0" customClass="TwoButton" customModule="Telepathy" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="568" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vuf-ke-VKo">
-                            <rect key="frame" x="16" y="10" width="36" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMl-oC-cv1">
+                            <rect key="frame" x="20" y="10" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Yes"/>
                             <connections>
-                                <action selector="yesButton:" destination="Kbp-nd-82T" eventType="touchUpInside" id="3oS-vQ-gP7"/>
+                                <action selector="yesButton:" destination="iSM-TF-Aa0" eventType="touchUpInside" id="y7c-3h-mE4"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80A-2z-1ix">
-                            <rect key="frame" x="327" y="10" width="32" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EF2-bS-sFV">
+                            <rect key="frame" x="502" y="10" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="No"/>
                             <connections>
-                                <action selector="noButton:" destination="Kbp-nd-82T" eventType="touchUpInside" id="5Yl-Uo-YKt"/>
+                                <action selector="noButton:" destination="iSM-TF-Aa0" eventType="touchUpInside" id="W0d-pU-1N2"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mah-MN-28d">
-                            <rect key="frame" x="135" y="10" width="104" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1s-VW-buC">
+                            <rect key="frame" x="232" y="10" width="104" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Next Round!"/>
+                            <state key="normal" title="Next Round"/>
                             <connections>
-                                <action selector="nextRound:" destination="Kbp-nd-82T" eventType="touchUpInside" id="qdi-vV-f2f"/>
+                                <action selector="nextRound:" destination="iSM-TF-Aa0" eventType="touchUpInside" id="sOh-Z9-LDJ"/>
                             </connections>
                         </button>
                     </subviews>
                     <connections>
-                        <outlet property="nextRound" destination="Mah-MN-28d" id="N1a-sz-f3S"/>
-                        <outlet property="noButton" destination="80A-2z-1ix" id="kKa-59-val"/>
-                        <outlet property="yesButton" destination="Vuf-ke-VKo" id="TAn-D8-res"/>
+                        <outlet property="nextRound" destination="Z1s-VW-buC" id="P7K-Kv-9N0"/>
+                        <outlet property="noButton" destination="EF2-bS-sFV" id="xev-9m-qfO"/>
+                        <outlet property="yesButton" destination="iMl-oC-cv1" id="pZq-oC-4lb"/>
                     </connections>
                 </collectionReusableView>
             </objects>
-            <point key="canvasLocation" x="1272.8873239436621" y="-150"/>
+            <point key="canvasLocation" x="1027" y="62"/>
         </scene>
     </scenes>
 </document>

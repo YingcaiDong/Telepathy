@@ -13,9 +13,17 @@ class CellBehaviorController: UICollectionViewLayout {
     fileprivate var frameWidth: CGFloat = 0
     fileprivate let inset: CGFloat = 15
     fileprivate let foot_height: CGFloat = 50
-    fileprivate var attributesCollection = [UICollectionViewLayoutAttributes]()
+    fileprivate var footIndex = IndexPath()
+    
+    fileprivate var allAttributes = NSMutableDictionary()
+    fileprivate var cellAttributes = NSMutableDictionary()
+    fileprivate var footerAttributes = NSMutableDictionary()
     
     override func prepare() {
+        // MARK: - Clear previous caches
+        allAttributes.removeAllObjects()
+        cellAttributes.removeAllObjects()
+        
         frameHeight = collectionView!.frame.height
         frameWidth = collectionView!.frame.width
         
@@ -25,6 +33,7 @@ class CellBehaviorController: UICollectionViewLayout {
         var xOffSet = [CGFloat]()
         var yOffSet = [CGFloat]()
         
+        // MARK: Caculate each cells' frame information
         if collectionView!.numberOfItems(inSection: 0) == 37 {
             itemsPerCol = 8
             
@@ -33,10 +42,10 @@ class CellBehaviorController: UICollectionViewLayout {
             cellSize = CGSize(width: (frameWidth - insetsWide) / itemsPerCol, height: (frameHeight - insetsHeight - foot_height) / itemsPerRow)
             
             for cols in 0 ..< Int(itemsPerCol) {
-                xOffSet.append(CGFloat(cols + 1) * (inset + (0.5 * cellSize.width)) + (CGFloat(cols) * 0.5 * cellSize.width))
+                xOffSet.append(CGFloat(cols + 1) * inset + (CGFloat(cols) * cellSize.width))
             }
             for rows in 0 ..< Int(itemsPerRow) {
-                yOffSet.append(CGFloat(rows + 1) * (inset + (0.5 * cellSize.height)) + (CGFloat(rows) * 0.5 * cellSize.height))
+                yOffSet.append(CGFloat(rows + 1) * inset + (CGFloat(rows) * cellSize.height))
             }
         }
         else if collectionView!.numberOfItems(inSection: 0) > 37 {
@@ -52,96 +61,63 @@ class CellBehaviorController: UICollectionViewLayout {
             }
         } else {
             cellSize = CGSize(width: 100, height: 100)
-            xOffSet.append(inset + (0.5 * cellSize.width))
-            yOffSet.append(inset + (0.5 * cellSize.height))
+            xOffSet.append((frameWidth - cellSize.width) / 2)
+            yOffSet.append((frameHeight - cellSize.height) / 2)
         }
         
+        // MARK: - Set Cell attributes
         for item in 0 ..< collectionView!.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
-            
             let perCol = item % Int(itemsPerCol)
             let perRow = Int(item / Int(itemsPerCol))
             let cellFrame = CGRect(x: xOffSet[perCol], y: yOffSet[perRow], width: cellSize.width, height: cellSize.height)
-            
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = cellFrame
-            attributesCollection.append(attributes)
+            cellAttributes.setObject(attributes, forKey: indexPath as NSCopying)
         }
+        allAttributes.setValue(cellAttributes, forKey: "cell")
         
-        self.collectionView?.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "SeparatorViewKind", withReuseIdentifier: "footbutton")
+        // MARK: - Set Footer attributes
+        for item in 0 ..< collectionView!.numberOfSections {
+            let indexPath = IndexPath(item: item, section: 0)
+            let footerFrame = CGRect(x: 0, y: frameHeight - foot_height, width: frameWidth, height: foot_height)
+            let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: indexPath)
+            attributes.frame = footerFrame
+            footerAttributes.setObject(attributes, forKey: indexPath as NSCopying)
+        }
+        allAttributes.setValue(footerAttributes, forKey: UICollectionElementKindSectionFooter)
     }
     
     override var collectionViewContentSize: CGSize {
         return CGSize(width: frameWidth, height: frameHeight)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
-        foot_view.backgroundColor = UIColor.white
         
-        let foot_attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-        foot_attributes.frame = CGRect(x: 0, y: frameHeight - foot_height, width: frameWidth, height: foot_height)
-        attributesCollection.append(foot_attributes)
-        
-        return foot_view
-    }
-    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var layoutAttributes = [UICollectionViewLayoutAttributes]()
-        for attributes in attributesCollection {
-            if rect.intersects(attributes.frame) {
-                layoutAttributes.append(attributes)
+        var attributes = [UICollectionViewLayoutAttributes]()
+        let allKeys:[NSMutableDictionary] = allAttributes.allValues as! [NSMutableDictionary]
+        for key in allKeys {
+            let attributeDict: [UICollectionViewLayoutAttributes] = key.allValues as! [UICollectionViewLayoutAttributes]
+            for attribute in attributeDict {
+                if rect.intersects(attribute.frame) {
+                    attributes.append(attribute)
+                }
             }
         }
-        return layoutAttributes
-    }
-    
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        var result: UICollectionViewLayoutAttributes?
-        for attributes in attributesCollection {
-            if attributes.indexPath == indexPath {
-                result = attributes
-            } else {
-                result = nil
-            }
-        }
-        return result
-    }
-    
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        var result: UICollectionViewLayoutAttributes?
-        for attributes in attributesCollection {
-            if indexPath == attributes.indexPath {
-                result = attributes
-            } else {
-                result = nil
-            }
-        }
-        return result
-    }
-}
-
-extension CellBehaviorController {
-
-}
-
-extension CellBehaviorController {
-    
-    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
-    }
-    
-    override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        
-        let attributes: UICollectionViewLayoutAttributes = self.layoutAttributesForItem(at: itemIndexPath)!
-        
-        attributes.alpha = 0.0
-        
-        let size: CGSize = CGSize(width: frameWidth, height: frameHeight)
-        attributes.center = CGPoint(x: size.width / 2, y: size.height / 2)
         return attributes
     }
     
-    override func finalizeCollectionViewUpdates() {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return (cellAttributes[indexPath] as! UICollectionViewLayoutAttributes)
     }
     
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return (footerAttributes[indexPath] as! UICollectionViewLayoutAttributes)
+    }
+}
+
+// MARK: - Responding to Collection View Updates
+extension CellBehaviorController {
+//    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+//        <#code#>
+//    }
 }

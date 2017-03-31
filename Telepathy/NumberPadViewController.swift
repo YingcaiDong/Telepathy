@@ -23,14 +23,10 @@ class NumberPadViewController: UICollectionViewController {
     
     weak var delegate: NumberPadViewControllerDelegate?
     
+    @IBOutlet weak var aFooter: TwoButton!
+    
     override func viewDidLoad() {
-    }
-}
-
-extension NumberPadViewController {
-    struct arrange {
-        var rows: CGFloat
-        var cols: CGFloat
+        self.collectionView?.register(TwoButton.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "footer")
     }
 }
 
@@ -63,18 +59,6 @@ extension NumberPadViewController {
         }
         return array
     }
-    
-    func arrangeRowNCol(cnt: Int) -> arrange {
-        if cnt < 7 {
-            let numOfElements = arrayPad[cnt].count
-            if numOfElements == 50 {
-                return arrange(rows: 5, cols: 10)
-            } else {
-                return arrange(rows: 5, cols: 5)
-            }
-        }
-        return arrange(rows: 1, cols: 1)
-    }
 }
 
 // MARK: - Dispaly array[cnt] elements
@@ -94,38 +78,25 @@ extension NumberPadViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "displayNum", for: indexPath) as! Cell2DisplayNumber
-        
         if cnt >= 7 {
             cell.NumberCell.text = String(Int(binaryNumber))
+            return cell
         } else {
             cell.NumberCell.text = String(arrayPad[cnt][indexPath.row])
+            cell.backgroundColor = UIColor.clear
+            return cell
         }
-        cell.backgroundColor = UIColor.white
-        return cell
     }
-}
-
-// MARK: - Custom collection view cell size and footer
-extension NumberPadViewController: UICollectionViewDelegateFlowLayout {
     
-    // MARK: - Footer size
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let foot_view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footbutton", for: indexPath)
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath) as! TwoButton
         
-        let footButton: TwoButton = foot_view as! TwoButton
-        footButton.delegate = self
+        self.delegate = aFooter
+        self.delegate?.howManyTimes(self, didUser: cnt)
         
-        self.delegate = footButton
-        delegate?.howManyTimes(self, didUser: cnt)
-        
-        foot_view.backgroundColor = UIColor.white
-        
-        return foot_view
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.size.width, height: foot_height)
+        aFooter.delegate = self
+        footer.addSubview(aFooter)
+        return footer
     }
 }
 
@@ -139,7 +110,6 @@ extension NumberPadViewController: TwoButtonDelegate {
             }
             cnt += 1
             self.collectionView?.reloadData()
-            
         }
         delegate?.howManyTimes(self, didUser: cnt)
     }
